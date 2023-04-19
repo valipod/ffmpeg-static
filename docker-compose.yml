@@ -1,0 +1,11 @@
+version: "2"
+services:
+
+  ubuntu:
+    image: valipod/ffmpeg-static:1.0
+    # build: .
+    volumes:
+    - ./build:/ffmpeg-static/build
+    - ./bin:/ffmpeg-static/bin
+    entrypoint: sh -c "tail -f /dev/null"
+

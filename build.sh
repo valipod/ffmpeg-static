@@ -102,23 +102,30 @@ download \
   "0095d2d2d1f3442ce1318336637b695f" \
   "https://github.com/madler/zlib/archive/"
 
-download \
-  "x264-stable.tar.gz" \
-  "" \
-  "nil" \
-  "https://code.videolan.org/videolan/x264/-/archive/stable/"
+#download \
+#  "x264-stable.tar.gz" \
+#  "" \
+#  "nil" \
+#  "https://code.videolan.org/videolan/x264/-/archive/stable/"
 
-download \
-  "x265_3.4.tar.gz" \
-  "" \
-  "e37b91c1c114f8815a3f46f039fe79b5" \
-  "http://download.openpkg.org/components/cache/x265/"
+git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git
 
-download \
-  "v0.1.6.tar.gz" \
-  "fdk-aac.tar.gz" \
-  "223d5f579d29fb0d019a775da4e0e061" \
-  "https://github.com/mstorsjo/fdk-aac/archive"
+#download \
+#  "x265_3.4.tar.gz" \
+#  "" \
+#  "e37b91c1c114f8815a3f46f039fe79b5" \
+#  "http://download.openpkg.org/components/cache/x265/"
+
+wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
+tar xjvf x265.tar.bz2
+
+#download \
+#  "v0.1.6.tar.gz" \
+#  "fdk-aac.tar.gz" \
+#  "223d5f579d29fb0d019a775da4e0e061" \
+#  "https://github.com/mstorsjo/fdk-aac/archive"
+
+git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac
 
 # libass dependency
 download \
@@ -140,10 +147,10 @@ download \
   "https://github.com/libass/libass/archive/"
 
 download \
-  "lame-3.99.5.tar.gz" \
+  "lame-3.100.tar.gz" \
   "" \
-  "84835b313d4a8b68f5349816d33e07ce" \
-  "http://downloads.sourceforge.net/project/lame/lame/3.99"
+  "nil" \
+  "http://downloads.sourceforge.net/project/lame/lame/3.100"
 
 download \
   "opus-1.1.2.tar.gz" \
@@ -176,10 +183,10 @@ download \
   "https://github.com/georgmartius/vid.stab/archive/"
 
 download \
-  "release-2.7.4.tar.gz" \
-  "zimg-release-2.7.4.tar.gz" \
-  "1757dcc11590ef3b5a56c701fd286345" \
-  "https://github.com/sekrit-twc/zimg/archive/"
+  "release-3.0.4.tar.gz" \
+  "zimg-release-3.0.4.tar.gz" \
+  "nil" \
+  "https://github.com/sekrit-twc/zimg/archive/refs/tags/"
 
 download \
   "v2.1.2.tar.gz" \
@@ -211,11 +218,14 @@ download \
   "4bec86331abef56129f9d1c994823f03" \
   "https://github.com/xiph/speex/archive/"
 
-download \
-  "n4.0.tar.gz" \
-  "ffmpeg4.0.tar.gz" \
-  "4749a5e56f31e7ccebd3f9924972220f" \
-  "https://github.com/FFmpeg/FFmpeg/archive"
+#download \
+#  "n4.0.tar.gz" \
+#  "ffmpeg4.0.tar.gz" \
+#  "4749a5e56f31e7ccebd3f9924972220f" \
+#  "https://github.com/FFmpeg/FFmpeg/archive"
+
+wget -O ffmpeg-snapshot.tar.bz2 https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 && \
+tar xjvf ffmpeg-snapshot.tar.bz2
 
 [ $download_only -eq 1 ] && exit 0
 
@@ -269,11 +279,11 @@ PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
 echo "*** Building x265 ***"
-cd $BUILD_DIR/x265*
+cd $BUILD_DIR/multicoreware*
 cd build/linux
 [ $rebuild -eq 1 ] && find . -mindepth 1 ! -name 'make-Makefiles.bash' -and ! -name 'multilib.sh' -exec rm -r {} +
 PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DENABLE_SHARED:BOOL=OFF -DSTATIC_LINK_CRT:BOOL=ON -DENABLE_CLI:BOOL=OFF ../../source
-sed -i '' 's/-lgcc_s/-lgcc_eh/g' x265.pc
+sed -i 's/-lgcc_s/-lgcc_eh/g' x265.pc
 make -j $jval
 make install
 
@@ -413,7 +423,7 @@ make install
 
 # FFMpeg
 echo "*** Building FFmpeg ***"
-cd $BUILD_DIR/FFmpeg*
+cd $BUILD_DIR/ffmpeg*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 
 if [ "$platform" = "linux" ]; then
