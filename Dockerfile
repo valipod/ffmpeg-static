@@ -45,6 +45,10 @@ RUN apt-get update && apt-get install -y \
   yasm \
   && rm -rf /var/lib/apt/lists/*
 
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python3 ./get-pip.py
+RUN pip install meson ninja
+
 # Copy the build scripts.
 COPY build.sh download.pl env.source fetchurl /ffmpeg-static/
 

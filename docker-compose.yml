@@ -2,7 +2,7 @@ version: "2"
 services:
 
   ubuntu:
-    image: valipod/ffmpeg-static:1.1
+    image: valipod/ffmpeg-static:1.2
     # build: .
     volumes:
     - ./build:/ffmpeg-static/build
