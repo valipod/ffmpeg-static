@@ -102,30 +102,29 @@ download \
   "0095d2d2d1f3442ce1318336637b695f" \
   "https://github.com/madler/zlib/archive/"
 
-#download \
-#  "x264-stable.tar.gz" \
-#  "" \
-#  "nil" \
-#  "https://code.videolan.org/videolan/x264/-/archive/stable/"
+download \
+  "v1.5.3.tar.gz" \
+  "" \
+  "df8213a3669dd846ddaad0fa1e9f417b" \
+  "https://github.com/Haivision/srt/archive/refs/tags/"
 
-git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git
+download \
+  "x264-stable.tar.gz" \
+  "" \
+  "nil" \
+  "https://code.videolan.org/videolan/x264/-/archive/stable/"
 
-#download \
-#  "x265_3.4.tar.gz" \
-#  "" \
-#  "e37b91c1c114f8815a3f46f039fe79b5" \
-#  "http://download.openpkg.org/components/cache/x265/"
+download \
+  "x265_3.4.tar.gz" \
+  "" \
+  "e37b91c1c114f8815a3f46f039fe79b5" \
+  "http://download.openpkg.org/components/cache/x265/"
 
-wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
-tar xjvf x265.tar.bz2
-
-#download \
-#  "v0.1.6.tar.gz" \
-#  "fdk-aac.tar.gz" \
-#  "223d5f579d29fb0d019a775da4e0e061" \
-#  "https://github.com/mstorsjo/fdk-aac/archive"
-
-git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac
+download \
+  "v0.1.6.tar.gz" \
+  "fdk-aac.tar.gz" \
+  "223d5f579d29fb0d019a775da4e0e061" \
+  "https://github.com/mstorsjo/fdk-aac/archive"
 
 # libass dependency
 download \
@@ -147,10 +146,10 @@ download \
   "https://github.com/libass/libass/archive/"
 
 download \
-  "lame-3.100.tar.gz" \
+  "lame-3.99.5.tar.gz" \
   "" \
-  "nil" \
-  "http://downloads.sourceforge.net/project/lame/lame/3.100"
+  "84835b313d4a8b68f5349816d33e07ce" \
+  "http://downloads.sourceforge.net/project/lame/lame/3.99"
 
 download \
   "opus-1.1.2.tar.gz" \
@@ -183,10 +182,10 @@ download \
   "https://github.com/georgmartius/vid.stab/archive/"
 
 download \
-  "release-3.0.4.tar.gz" \
-  "zimg-release-3.0.4.tar.gz" \
-  "nil" \
-  "https://github.com/sekrit-twc/zimg/archive/refs/tags/"
+  "release-2.7.4.tar.gz" \
+  "zimg-release-2.7.4.tar.gz" \
+  "1757dcc11590ef3b5a56c701fd286345" \
+  "https://github.com/sekrit-twc/zimg/archive/"
 
 download \
   "v2.1.2.tar.gz" \
@@ -218,14 +217,17 @@ download \
   "4bec86331abef56129f9d1c994823f03" \
   "https://github.com/xiph/speex/archive/"
 
-#download \
-#  "n4.0.tar.gz" \
-#  "ffmpeg4.0.tar.gz" \
-#  "4749a5e56f31e7ccebd3f9924972220f" \
-#  "https://github.com/FFmpeg/FFmpeg/archive"
+download \
+  "n6.0.tar.gz" \
+  "ffmpeg6.0.tar.gz" \
+  "586ca7cc091d26fd0a4c26308950ca51" \
+  "https://github.com/FFmpeg/FFmpeg/archive"
 
-wget -O ffmpeg-snapshot.tar.bz2 https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 && \
-tar xjvf ffmpeg-snapshot.tar.bz2
+download \
+  "SDL2-2.0.22.tar.gz" \
+  "SDL2-2.0.22.tar.gz" \
+  "40aedb499cb2b6f106d909d9d97f869a" \
+  "https://github.com/libsdl-org/SDL/releases/download/release-2.0.22"
 
 [ $download_only -eq 1 ] && exit 0
 
@@ -279,7 +281,7 @@ PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
 echo "*** Building x265 ***"
-cd $BUILD_DIR/multicoreware*
+cd $BUILD_DIR/x265*
 cd build/linux
 [ $rebuild -eq 1 ] && find . -mindepth 1 ! -name 'make-Makefiles.bash' -and ! -name 'multilib.sh' -exec rm -r {} +
 PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DENABLE_SHARED:BOOL=OFF -DSTATIC_LINK_CRT:BOOL=ON -DENABLE_CLI:BOOL=OFF ../../source
@@ -351,7 +353,7 @@ if [ "$platform" = "linux" ]; then
   sed -i "s/prefix=.*/prefix=${TARGET_DIR_SED}\nINC=-I\$(prefix)\/include/" ./Makefile
   sed -i "s/SHARED=.*/SHARED=no/" ./Makefile
 elif [ "$platform" = "darwin" ]; then
-  sed -i "" "s/prefix=.*/prefix=${TARGET_DIR_SED}/" ./Makefile
+  sed -i "s/prefix=./prefix=${TARGET_DIR_SED}/" ./Makefile
 fi
 make install_base
 
@@ -368,7 +370,7 @@ cd $BUILD_DIR/vid.stab-release-*
 if [ "$platform" = "linux" ]; then
   sed -i "s/vidstab SHARED/vidstab STATIC/" ./CMakeLists.txt
 elif [ "$platform" = "darwin" ]; then
-  sed -i "" "s/vidstab SHARED/vidstab STATIC/" ./CMakeLists.txt
+  sed -i "s/vidstab SHARED/vidstab STATIC/" ./CMakeLists.txt
 fi
 PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR"
 make -j $jval
@@ -386,6 +388,7 @@ cd $BUILD_DIR/zimg-release-*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 ./autogen.sh
 ./configure --enable-static  --prefix=$TARGET_DIR --disable-shared
+sed -i 's/size_t/std::size_t/g' src/zimg/colorspace/matrix3.cpp
 make -j $jval
 make install
 
@@ -421,9 +424,41 @@ cd $BUILD_DIR/speex*
 make -j $jval
 make install
 
+echo "*** Building libsdl ***"
+cd $BUILD_DIR/SDL*
+[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+./autogen.sh
+./configure --prefix=$TARGET_DIR --disable-shared
+make -j $jval
+make install
+
+echo "*** Building RIST ***"
+cd $BUILD_DIR
+rm -rf librist
+git clone https://code.videolan.org/rist/librist.git
+cd $BUILD_DIR/librist*
+git checkout v0.2.10
+[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+mkdir -p build
+cd build
+meson --default-library=static .. --prefix=$TARGET_DIR --bindir="../bin/" --libdir="$TARGET_DIR/lib"
+ninja
+ninja install
+
+echo "*** Building SRT ***"
+cd $BUILD_DIR/srt*
+[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
+mkdir -p build
+cd build
+cmake -DENABLE_APPS=OFF -DCMAKE_INSTALL_PREFIX=$TARGET_DIR -DENABLE_C_DEPS=ON -DENABLE_SHARED=OFF -DENABLE_STATIC=ON -DOPENSSL_USE_STATIC_LIBS=ON ..
+sed -i 's/-lgcc_s/-lgcc_eh/g' haisrt.pc
+sed -i 's/-lgcc_s/-lgcc_eh/g' srt.pc
+make
+make install
+
 # FFMpeg
 echo "*** Building FFmpeg ***"
-cd $BUILD_DIR/ffmpeg*
+cd $BUILD_DIR/FFmpeg*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 
 if [ "$platform" = "linux" ]; then
@@ -465,7 +500,9 @@ if [ "$platform" = "linux" ]; then
     --enable-libxvid \
     --enable-libzimg \
     --enable-nonfree \
-    --enable-openssl
+    --enable-openssl \
+    --enable-librist \
+    --enable-libsrt
 elif [ "$platform" = "darwin" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
   PKG_CONFIG_PATH="${TARGET_DIR}/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl/1.0.2o_1/lib/pkgconfig" ./configure \
@@ -503,7 +540,9 @@ elif [ "$platform" = "darwin" ]; then
     --enable-libxvid \
     --enable-libzimg \
     --enable-nonfree \
-    --enable-openssl
+    --enable-openssl \
+    --enable-librist \
+    --enable-libsrt
 fi
 
 PATH="$BIN_DIR:$PATH" make -j $jval

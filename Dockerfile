@@ -1,4 +1,4 @@
-FROM ubuntu:lunar
+FROM ubuntu:jammy
 
 # Basic packages needed to download dependencies and unpack them.
 RUN apt-get update && apt-get install -y \
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
   cmake \
   curl \
   frei0r-plugins-dev \
-  gawk git \
+  gawk \
   libfontconfig-dev \
   libfreetype6-dev \
   libopencore-amrnb-dev \
