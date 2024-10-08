@@ -375,7 +375,10 @@ make -j $jval
 make install
 
 echo "*** Building zimg ***"
-cd $BUILD_DIR/zimg-release-*
+cd $BUILD_DIR
+git clone https://github.com/sekrit-twc/zimg.git
+cd $BUILD_DIR/zimg*
+git submodule update --init --recursive .
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 ./autogen.sh
 ./configure --enable-static  --prefix=$TARGET_DIR --disable-shared
