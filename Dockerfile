@@ -46,8 +46,8 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3 ./get-pip.py
-RUN pip install meson ninja
+RUN python3 ./get-pip.py --break-system-packages
+RUN pip install meson ninja --break-system-packages
 
 # Copy the build scripts.
 COPY build.sh download.pl env.source fetchurl /ffmpeg-static/
