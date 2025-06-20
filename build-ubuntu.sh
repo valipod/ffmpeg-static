@@ -26,6 +26,7 @@ sudo apt-get -y --force-yes install \
   libxcb-shm0-dev \
   libxcb-xfixes0-dev \
   libxvidcore-dev \
+  meson \
   pkg-config \
   texi2html \
   zlib1g-dev
@@ -42,4 +43,3 @@ if [ $need_ppa -eq 1 ]; then
 fi
 
 ./build.sh "$@"
-

@@ -85,10 +85,10 @@ cd $BUILD_DIR
   "http://www.tortall.net/projects/yasm/releases/"
 
 [ $is_x86 -eq 1 ] && download \
-  "nasm-2.15.05.tar.bz2" \
+  "nasm-2.16.03.tar.bz2" \
   "" \
-  "b8985eddf3a6b08fc246c14f5889147c" \
-  "https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/"
+  "nil" \
+  "https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/"
 
 download \
   "OpenSSL_1_0_2o.tar.gz" \
@@ -146,9 +146,9 @@ download \
   "https://github.com/xiph/opus/releases/download/v1.1.2"
 
 download \
-  "v1.6.1.tar.gz" \
-  "vpx-1.6.1.tar.gz" \
-  "b0925c8266e2859311860db5d76d1671" \
+  "v1.15.2.tar.gz" \
+  "vpx-1.15.2.tar.gz" \
+  "nil" \
   "https://github.com/webmproject/libvpx/archive"
 
 download \
@@ -176,11 +176,11 @@ download \
   "https://github.com/sekrit-twc/zimg/archive/refs/tags/"
 
 download \
-  "v2.1.2.tar.gz" \
-  "openjpeg-2.1.2.tar.gz" \
-  "40a7bfdcc66280b3c1402a0eb1a27624" \
+  "v2.5.3.tar.gz" \
+  "openjpeg-2.5.3.tar.gz" \
+  "nil" \
   "https://github.com/uclouvain/openjpeg/archive/"
-
+  
 download \
   "v0.6.1.tar.gz" \
   "libwebp-0.6.1.tar.gz" \
