@@ -461,6 +461,15 @@ PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -S . -B aom_build -DCMAKE_INSTAL
 make -C aom_build -j $jval
 make -C aom_build install
 
+echo "*** Building SVT-AV1 ***"
+cd $BUILD_DIR
+rm -rf SVT-AV1
+git clone --depth 1 --branch v4.2.0 https://gitlab.com/AOMediaCodec/SVT-AV1.git
+cd $BUILD_DIR/SVT-AV1
+PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -S . -B svt_build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS:bool=off -DBUILD_APPS:bool=off -DBUILD_TESTING:bool=off
+make -C svt_build -j $jval
+make -C svt_build install
+
 # FFMpeg
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
@@ -509,7 +518,8 @@ if [ "$platform" = "linux" ]; then
     --enable-librist \
     --enable-libsrt \
     --enable-libdav1d \
-    --enable-libaom
+    --enable-libaom \
+    --enable-libsvtav1
 elif [ "$platform" = "darwin" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
   PKG_CONFIG_PATH="${TARGET_DIR}/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl/1.0.2o_1/lib/pkgconfig" ./configure \
@@ -551,7 +561,8 @@ elif [ "$platform" = "darwin" ]; then
     --enable-librist \
     --enable-libsrt \
     --enable-libdav1d \
-    --enable-libaom
+    --enable-libaom \
+    --enable-libsvtav1
 fi
 
 PATH="$BIN_DIR:$PATH" make -j $jval
