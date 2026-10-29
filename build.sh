@@ -91,45 +91,44 @@ cd $BUILD_DIR
   "https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/"
 
 download \
-  "OpenSSL_1_0_2o.tar.gz" \
+  "openssl-3.6.5.tar.gz" \
   "" \
-  "5b5c050f83feaa0c784070637fac3af4" \
-  "https://github.com/openssl/openssl/archive/"
+  "e1df3c3fea55e3dc8bcb6b422f436fbc" \
+  "https://github.com/openssl/openssl/releases/download/openssl-3.6.5/"
 
 download \
-  "v1.2.11.tar.gz" \
-  "zlib-1.2.11.tar.gz" \
-  "0095d2d2d1f3442ce1318336637b695f" \
+  "v1.3.2.tar.gz" \
+  "zlib-1.3.2.tar.gz" \
+  "d092e353ab96ab0d43384638f8ea0b41" \
   "https://github.com/madler/zlib/archive/"
 
 download \
-  "v1.5.3.tar.gz" \
+  "v1.5.7.tar.gz" \
   "" \
-  "df8213a3669dd846ddaad0fa1e9f417b" \
+  "3ccc21ed2ed26fcfe6496b8c281137ac" \
   "https://github.com/Haivision/srt/archive/refs/tags/"
 
 git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git
 
-wget -O x265.tar.bz2 https://bitbucket.org/multicoreware/x265_git/get/master.tar.bz2 && \
-    tar xjvf x265.tar.bz2
+rm -rf x265_git && git clone --depth 1 --branch 4.2 https://bitbucket.org/multicoreware/x265_git.git
 git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac
 
 # libass dependency
 download \
-  "harfbuzz-1.4.6.tar.bz2" \
+  "harfbuzz-15.0.0.tar.xz" \
   "" \
-  "e246c08a3bac98e31e731b2a1bf97edf" \
-  "https://www.freedesktop.org/software/harfbuzz/release/"
+  "e489b638efdf8b1eb499030bbc7a394d" \
+  "https://github.com/harfbuzz/harfbuzz/releases/download/15.0.0/"
 
 download \
-  "fribidi-1.0.2.tar.bz2" \
+  "fribidi-1.0.17.tar.xz" \
   "" \
-  "bd2eb2f3a01ba11a541153f505005a7b" \
-  "https://github.com/fribidi/fribidi/releases/download/v1.0.2/"
+  "f86bb656ecfdee321b93a059734fc106" \
+  "https://github.com/fribidi/fribidi/releases/download/v1.0.17/"
 
 download \
-  "0.13.6.tar.gz" \
-  "libass-0.13.6.tar.gz" \
+  "0.17.5.tar.gz" \
+  "libass-0.17.5.tar.gz" \
   "nil" \
   "https://github.com/libass/libass/archive/"
 
@@ -140,22 +139,20 @@ download \
   "http://downloads.sourceforge.net/project/lame/lame/3.00"
 
 download \
-  "opus-1.1.2.tar.gz" \
+  "opus-1.6.1.tar.gz" \
   "" \
-  "1f08a661bc72930187893a07f3741a91" \
-  "https://github.com/xiph/opus/releases/download/v1.1.2"
+  "67cafc438c430aa74eeb605eef670886" \
+  "https://downloads.xiph.org/releases/opus"
 
 download \
-  "v1.15.2.tar.gz" \
-  "vpx-1.15.2.tar.gz" \
+  "v1.17.0.tar.gz" \
+  "vpx-1.17.0.tar.gz" \
   "nil" \
   "https://github.com/webmproject/libvpx/archive"
 
-download \
-  "rtmpdump-2.3.tgz" \
-  "" \
-  "eb961f31cd55f0acf5aad1a7b900ef59" \
-  "https://rtmpdump.mplayerhq.hu/download/"
+rm -rf rtmpdump && mkdir rtmpdump && git -C rtmpdump init -q && \
+  git -C rtmpdump fetch -q --depth 1 https://git.ffmpeg.org/rtmpdump.git 138fdb258d9fc26f1843fd1b891180416c9dc575 && \
+  git -C rtmpdump checkout -q FETCH_HEAD
 
 download \
   "soxr-0.1.2-Source.tar.xz" \
@@ -164,45 +161,45 @@ download \
   "https://sourceforge.net/projects/soxr/files/"
 
 download \
-  "release-0.98b.tar.gz" \
-  "vid.stab-release-0.98b.tar.gz" \
-  "299b2f4ccd1b94c274f6d94ed4f1c5b8" \
+  "v1.1.2.tar.gz" \
+  "vid.stab-1.1.2.tar.gz" \
+  "a91ff0221dd8ec1f85b2a80a07af4831" \
   "https://github.com/georgmartius/vid.stab/archive/"
 
 download \
-  "release-3.0.4.tar.gz" \
-  "zimg-release-3.0.4.tar.gz" \
+  "release-3.0.6.tar.gz" \
+  "zimg-release-3.0.6.tar.gz" \
   "nil" \
   "https://github.com/sekrit-twc/zimg/archive/refs/tags/"
 
 download \
-  "v2.5.3.tar.gz" \
-  "openjpeg-2.5.3.tar.gz" \
+  "v2.5.4.tar.gz" \
+  "openjpeg-2.5.4.tar.gz" \
   "nil" \
   "https://github.com/uclouvain/openjpeg/archive/"
   
 download \
-  "v0.6.1.tar.gz" \
-  "libwebp-0.6.1.tar.gz" \
-  "1c3099cd2656d0d80d3550ee29fc0f28" \
+  "v1.6.0.tar.gz" \
+  "libwebp-1.6.0.tar.gz" \
+  "d498caf9323a24ce3ed40b84c22a32cd" \
   "https://github.com/webmproject/libwebp/archive/"
 
 download \
-  "v1.3.6.tar.gz" \
-  "vorbis-1.3.6.tar.gz" \
-  "03e967efb961f65a313459c5d0f4cbfb" \
+  "v1.3.7.tar.gz" \
+  "vorbis-1.3.7.tar.gz" \
+  "689dc495b22c5f08246c00dab35f1dc7" \
   "https://github.com/xiph/vorbis/archive/"
 
 download \
-  "v1.3.3.tar.gz" \
-  "ogg-1.3.3.tar.gz" \
-  "b8da1fe5ed84964834d40855ba7b93c2" \
+  "v1.3.6.tar.gz" \
+  "ogg-1.3.6.tar.gz" \
+  "049c22ed9a2e2f9757b32cc47b6b4a48" \
   "https://github.com/xiph/ogg/archive/"
 
 download \
-  "Speex-1.2.0.tar.gz" \
-  "Speex-1.2.0.tar.gz" \
-  "4bec86331abef56129f9d1c994823f03" \
+  "Speex-1.2.1.tar.gz" \
+  "Speex-1.2.1.tar.gz" \
+  "2872f3c3bf867dbb0b63d06762f4b493" \
   "https://github.com/xiph/speex/archive/"
 
 #download \
@@ -215,10 +212,10 @@ wget -O ffmpeg-snapshot.tar.bz2 https://ffmpeg.org/releases/ffmpeg-snapshot.tar.
     tar xjvf ffmpeg-snapshot.tar.bz2
 
 download \
-  "SDL2-2.0.22.tar.gz" \
-  "SDL2-2.0.22.tar.gz" \
-  "40aedb499cb2b6f106d909d9d97f869a" \
-  "https://github.com/libsdl-org/SDL/releases/download/release-2.0.22"
+  "SDL2-2.32.10.tar.gz" \
+  "SDL2-2.32.10.tar.gz" \
+  "7b234751c91737168d88c83041ca5aa9" \
+  "https://github.com/libsdl-org/SDL/releases/download/release-2.32.10"
 
 [ $download_only -eq 1 ] && exit 0
 
@@ -246,12 +243,12 @@ echo "*** Building OpenSSL ***"
 cd $BUILD_DIR/openssl*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
 if [ "$platform" = "darwin" ]; then
-  PATH="$BIN_DIR:$PATH" ./Configure darwin64-x86_64-cc --prefix=$TARGET_DIR
+  PATH="$BIN_DIR:$PATH" ./Configure darwin64-x86_64-cc --prefix=$TARGET_DIR --libdir=lib
 elif [ "$platform" = "linux" ]; then
-  PATH="$BIN_DIR:$PATH" ./config --prefix=$TARGET_DIR
+  PATH="$BIN_DIR:$PATH" ./config --prefix=$TARGET_DIR --libdir=lib --openssldir=/etc/ssl
 fi
 PATH="$BIN_DIR:$PATH" make -j $jval
-make install
+make install_sw
 
 echo "*** Building zlib ***"
 cd $BUILD_DIR/zlib*
@@ -272,7 +269,7 @@ PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
 echo "*** Building x265 ***"
-cd $BUILD_DIR/multicoreware*
+cd $BUILD_DIR/x265_git
 cd build/linux
 [ $rebuild -eq 1 ] && find . -mindepth 1 ! -name 'make-Makefiles.bash' -and ! -name 'multilib.sh' -exec rm -r {} +
 PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DENABLE_SHARED:BOOL=OFF -DSTATIC_LINK_CRT:BOOL=ON -DENABLE_CLI:BOOL=OFF ../../source
@@ -290,10 +287,10 @@ make install
 
 echo "*** Building harfbuzz ***"
 cd $BUILD_DIR/harfbuzz-*
-[ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-./configure --prefix=$TARGET_DIR --disable-shared --enable-static
-make -j $jval
-make install
+rm -rf build
+PATH="$BIN_DIR:$PATH" meson setup build --default-library=static --prefix=$TARGET_DIR --libdir=lib -Dtests=disabled -Ddocs=disabled -Dglib=disabled -Dgobject=disabled -Dcairo=disabled -Dchafa=disabled -Dicu=disabled -Dintrospection=disabled -Dutilities=disabled
+ninja -C build
+ninja -C build install
 
 echo "*** Building fribidi ***"
 cd $BUILD_DIR/fribidi-*
@@ -334,7 +331,7 @@ PATH="$BIN_DIR:$PATH" make -j $jval
 make install
 
 echo "*** Building librtmp ***"
-cd $BUILD_DIR/rtmpdump-*
+cd $BUILD_DIR/rtmpdump
 cd librtmp
 [ $rebuild -eq 1 ] && make distclean || true
 
@@ -356,14 +353,9 @@ make -j $jval
 make install
 
 echo "*** Building libvidstab ***"
-cd $BUILD_DIR/vid.stab-release-*
+cd $BUILD_DIR/vid.stab-*
 [ $rebuild -eq 1 -a -f Makefile ] && make distclean || true
-if [ "$platform" = "linux" ]; then
-  sed -i "s/vidstab SHARED/vidstab STATIC/" ./CMakeLists.txt
-elif [ "$platform" = "darwin" ]; then
-  sed -i "s/vidstab SHARED/vidstab STATIC/" ./CMakeLists.txt
-fi
-PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR"
+PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DBUILD_SHARED_LIBS:bool=off
 make -j $jval
 make install
 
@@ -376,6 +368,7 @@ make install
 
 echo "*** Building zimg ***"
 cd $BUILD_DIR
+rm -rf zimg
 git clone https://github.com/sekrit-twc/zimg.git
 cd $BUILD_DIR/zimg*
 git submodule update --init --recursive .
@@ -450,6 +443,24 @@ sed -i 's/-lgcc_s/-lgcc_eh/g' srt.pc
 make
 make install
 
+echo "*** Building dav1d ***"
+cd $BUILD_DIR
+rm -rf dav1d
+git clone --depth 1 --branch 1.5.4 https://code.videolan.org/videolan/dav1d.git
+cd $BUILD_DIR/dav1d
+PATH="$BIN_DIR:$PATH" meson setup build --default-library=static --prefix=$TARGET_DIR --libdir=lib -Denable_tools=false -Denable_tests=false -Denable_examples=false -Denable_docs=false
+ninja -C build
+ninja -C build install
+
+echo "*** Building libaom ***"
+cd $BUILD_DIR
+rm -rf aom
+git clone --depth 1 --branch v3.15.2 https://aomedia.googlesource.com/aom
+cd $BUILD_DIR/aom
+PATH="$BIN_DIR:$PATH" cmake -G "Unix Makefiles" -S . -B aom_build -DCMAKE_INSTALL_PREFIX="$TARGET_DIR" -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS:bool=off -DENABLE_DOCS=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 -DENABLE_TOOLS=0 -DENABLE_NASM=1
+make -C aom_build -j $jval
+make -C aom_build install
+
 # FFMpeg
 echo "*** Building FFmpeg ***"
 cd $BUILD_DIR/ffmpeg*
@@ -496,7 +507,9 @@ if [ "$platform" = "linux" ]; then
     --enable-nonfree \
     --enable-openssl \
     --enable-librist \
-    --enable-libsrt
+    --enable-libsrt \
+    --enable-libdav1d \
+    --enable-libaom
 elif [ "$platform" = "darwin" ]; then
   [ ! -f config.status ] && PATH="$BIN_DIR:$PATH" \
   PKG_CONFIG_PATH="${TARGET_DIR}/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/local/Cellar/openssl/1.0.2o_1/lib/pkgconfig" ./configure \
@@ -536,7 +549,9 @@ elif [ "$platform" = "darwin" ]; then
     --enable-nonfree \
     --enable-openssl \
     --enable-librist \
-    --enable-libsrt
+    --enable-libsrt \
+    --enable-libdav1d \
+    --enable-libaom
 fi
 
 PATH="$BIN_DIR:$PATH" make -j $jval

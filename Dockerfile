@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
   curl \
   frei0r-plugins-dev \
   gawk \
+  help2man \
   libfontconfig-dev \
   libfreetype6-dev \
   libopencore-amrnb-dev \
